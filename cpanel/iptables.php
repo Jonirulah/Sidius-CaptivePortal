@@ -56,7 +56,7 @@ if ($roleuser == "FREE") {
   exec("sudo iptables -A FORWARD -m mac --mac-source $MAC -m limit --limit $free/sec -m time --datestart $date[start] --datestop $date[stop_free] ! -d $config[external_subnet] -i $config[internal_int] -o $config[external_int] -j ACCEPT");
   header("Location: https://google.es/");
 
-  $status = "CREATED FREE CONCESSION SUCCESSFULY";
+  $status = "CREATED FREE CONCESSION SUCCESSFULLY";
   loggerCONCESSION($status,$MAC);
   session_set_cookie_params(1800);
   session_start();
@@ -68,7 +68,7 @@ elseif ($roleuser == "STANDARD") {
   exec("sudo iptables -A FORWARD -m mac --mac-source $MAC -m limit --limit $premium/sec -m time --datestart $date[start] --datestop $date[stop_premium] ! -d $config[external_subnet] -i $config[internal_int] -o $config[external_int] -j ACCEPT");
   header("Location: https://google.es/");
 
-  $status = "CREATED STANDARD CONCESSION SUCCESSFULY";
+  $status = "CREATED STANDARD CONCESSION SUCCESSFULLY";
   loggerCONCESSION($status,$MAC);
   session_set_cookie_params(14400);
   session_start();
@@ -97,7 +97,7 @@ elseif ($roleuser == "administrator") {
   session_set_cookie_params(86400);
   session_start();
 
-  $status = "CREATED ADMIN CONCESSION SUCCESSFULY";
+  $status = "CREATED ADMIN CONCESSION SUCCESSFULLY";
   loggerCONCESSION($status,$MAC);
   
   $_SESSION['config'] = $config;
