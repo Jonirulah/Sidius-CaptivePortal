@@ -28,6 +28,11 @@ exec("sudo iptables -P FORWARD DROP");
 exec("sudo iptables -A INPUT -i lo -j ACCEPT");
 exec("sudo iptables -A OUTPUT -o lo -j ACCEPT");
 
+# Anti-DOS Policy
+exec("sudo iptables -A INPUT -m state --state INVALID -j DROP");
+exec("sudo iptables -A FORWARD -m state --state INVALID -j DROP");
+exec("sudo iptables -A OUTPUT -m state --state INVALID -j DROP");
+
 # Server Rules
 exec("# Anti-Port-Flood for ACCEPTED RULES");
 exec("sudo iptables -A INPUT -p tcp -m connlimit --connlimit-above 10 -j REJECT --reject-with tcp-reset");
@@ -76,10 +81,7 @@ exec("sudo iptables -A OUTPUT -p tcp --dport 443 -j ACCEPT");
 exec("sudo iptables -A INPUT -p tcp --sport 80 -j ACCEPT");
 # Used for packages fetch
 exec("sudo iptables -A OUTPUT -p tcp --dport 80 -j ACCEPT");
-# Anti-DOS Policy for ACCEPTED RULES
-exec("sudo iptables -A INPUT -m state --state INVALID -j DROP");
-exec("sudo iptables -A FORWARD -m state --state INVALID -j DROP");
-exec("sudo iptables -A OUTPUT -m state --state INVALID -j DROP");
+
 # CAPTIVE PORTAL SETTINGS
 # Forward toggle on
 exec("echo 1 > /proc/sys/net/ipv4/ip_forward");
