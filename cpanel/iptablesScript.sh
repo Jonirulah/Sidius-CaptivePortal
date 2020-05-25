@@ -26,6 +26,10 @@ iptables -P FORWARD DROP
 iptables -A INPUT -i lo -j ACCEPT
 iptables -A OUTPUT -o lo -j ACCEPT
 
+# Anti-DOS Policy
+iptables -A INPUT -m state --state INVALID -j DROP
+iptables -A FORWARD -m state --state INVALID -j DROP
+iptables -A OUTPUT -m state --state INVALID -j DROP
 
 # Server Rules
 # Anti-Port-Flood for ACCEPTED RULES
@@ -74,12 +78,6 @@ iptables -A OUTPUT -p tcp --dport 443 -j ACCEPT
 # HTTP Enable Server to Clients
 iptables -A INPUT -p tcp --sport 80 -j ACCEPT # Used for packages fetch
 iptables -A OUTPUT -p tcp --dport 80 -j ACCEPT
-
-# Anti-DOS Policy for ACCEPTED RULES
-iptables -A INPUT -m state --state INVALID -j DROP
-iptables -A FORWARD -m state --state INVALID -j DROP
-iptables -A OUTPUT -m state --state INVALID -j DROP
-
 
 # CAPTIVE PORTAL SETTINGS
 # Forward toggle on
